@@ -52,8 +52,8 @@ public class NeoSearchScheduler implements Runnable{
 	  final static Logger logger = Logger.getLogger(NeoSearchScheduler.class);
 	  
 	  private int retryTime = initialRetryTime;
-	  private static final int maxRetryTime = 1800000;
-	  private static final int initialRetryTime = 5000;
+	  private static final int maxRetryTime = 900000;
+	  private static final int initialRetryTime = 2500;
 	  
 	  boolean probe() {
 		  try {
@@ -75,8 +75,9 @@ public class NeoSearchScheduler implements Runnable{
 	  }
 	  void retry() {
 			while(true) {
-				logger.info("Quota Exceeded. Retrying in "+retryTime/1000 +" s");
+				
 				retryTime*=2;
+				logger.info("Quota Exceeded. Retrying in "+retryTime/1000 +" s");
 				if(retryTime> maxRetryTime) {
 					retryTime = maxRetryTime;
 				}
