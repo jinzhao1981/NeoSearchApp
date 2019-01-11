@@ -43,8 +43,8 @@ class NeoRecordNasaFetcher implements NeoRecordFetcher{
 	}
 	public String fetchNeoRecord(String strUrl) {
 		  try {
-				URL url = new URL(strUrl);
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                URL url = new URL(strUrl);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		        conn.setRequestMethod("GET");
 		        conn.setRequestProperty("Accept", "application/json");
 	          

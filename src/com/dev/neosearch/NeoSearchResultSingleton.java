@@ -57,7 +57,7 @@ class NeoResult {
 * the search result and display it to the users.
 * 
 */
-class NeoSearchResultSingleton{
+public class NeoSearchResultSingleton{
 	final static Logger logger = Logger.getLogger(NeoSearchResultSingleton.class);
 		
 	public static NeoSearchResultSingleton instance=null;
