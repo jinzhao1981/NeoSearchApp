@@ -20,7 +20,7 @@ import java.util.concurrent.BlockingQueue;
 public class NeoSearchWorker {
 	 private NeoRecordFetcher fetcher;
 	 final static Logger logger = Logger.getLogger(NeoSearchWorker.class);
-	 private boolean alreadyGetElementCount=false;
+
 	 public NeoSearchWorker(NeoRecordFetcher f){
 		 fetcher = f;
 	 }

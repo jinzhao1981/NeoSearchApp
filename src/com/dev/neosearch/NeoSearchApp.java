@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 public class NeoSearchApp {
 	public static void main(String[] args) {
-		
+		String key = "DEMO_KEY";
 		boolean isTesting =false;
 		for(int i =0; i< args.length; i++){
 			String s = args[i];
@@ -12,21 +12,26 @@ public class NeoSearchApp {
 				isTesting = true;
 				break;
 			}
+	         if(s.length()==2&&s.charAt(0)=='-'&&s.charAt(1)=='k') {
+	                if(i+1<args.length)
+	                    key=args[i+1];
+	                break;
+	            }
 		}
 		if(isTesting) {
 			testData.getInstance().init();
-			run(new NeoRecordTestFetcher());
+			run(new NeoRecordTestFetcher(), key);
 		}
 		else {
-			run(new NeoRecordNasaFetcher());
+			run(new NeoRecordNasaFetcher(), key);
 		}
 	}
 	final static Logger logger = Logger.getLogger(NeoSearchApp.class);
-	public static void run(NeoRecordFetcher fetchStrategy) {
+	public static void run(NeoRecordFetcher fetchStrategy, String key) {
 		try {
 			logger.debug("NeoSearchApp started ...");
 			
-			NeoSearchScheduler neoManager = new NeoSearchScheduler(fetchStrategy);
+			NeoSearchScheduler neoManager = new NeoSearchScheduler(fetchStrategy, key);
 			Thread t1 = new Thread(neoManager);
 			t1.start();
 			t1.join();

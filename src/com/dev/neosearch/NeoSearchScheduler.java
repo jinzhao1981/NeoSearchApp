@@ -47,7 +47,8 @@ class ScheduleResult{
 *
 */
 public class NeoSearchScheduler implements Runnable{
-	  private NeoRecordFetcher processor;
+	  private final NeoRecordFetcher processor;
+	  private final String key;
 	  final static Logger logger = Logger.getLogger(NeoSearchScheduler.class);
 	  
 	  private int retryTime = initialRetryTime;
@@ -56,7 +57,7 @@ public class NeoSearchScheduler implements Runnable{
 	  
 	  boolean probe() {
 		  try {
-			String probeUrl = "https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=DEMO_KEY";
+			String probeUrl = "https://api.nasa.gov/neo/rest/v1/neo/browse?api_key="+key;
 			URL url = new URL(probeUrl);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
@@ -93,8 +94,9 @@ public class NeoSearchScheduler implements Runnable{
 			}
 	  }
 	  
-	  public NeoSearchScheduler(NeoRecordFetcher p) { 
+	  public NeoSearchScheduler(NeoRecordFetcher p, String k) { 
 		  processor = p;
+		  key = k;
 	  }
 	 
 	  @Override
@@ -102,7 +104,7 @@ public class NeoSearchScheduler implements Runnable{
 		  
 		    logger.debug("Start Scheduler " + Thread.currentThread().getName());
 			BlockingQueue<Command> urlQueue = new ArrayBlockingQueue<Command> (100);
-			String str = "https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=DEMO_KEY";
+			String str = "https://api.nasa.gov/neo/rest/v1/neo/browse?api_key="+key;
 			try {
 			  urlQueue.put(new Command(str));
 			} catch (InterruptedException e1) {
